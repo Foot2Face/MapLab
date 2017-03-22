@@ -47,14 +47,23 @@ void GoNorth(Map &map)
 	int currentY = map.CurrentLocation->gety();
 	if (newLocation == nullptr) 
 	{
+		int newX = currentX;
 		int newY = currentY + 1;
-		system("cls");
-		cout << "You haven't been here before, enter a name for this place: ";
-		string name;
-		cin >> name;
-		newLocation = new Location(name, currentX, newY);
-		cout << "This place is now called: " + name << endl;
-		
+		auto existing = map.LookupLoactionOnMap(newX, newY);
+
+		if (existing == nullptr)
+		{
+			system("cls");
+			cout << "You haven't been here before, enter a name for this place: ";
+			string name;
+			cin >> name;
+			newLocation = new Location(name, currentX, newY);
+			cout << "This place is now called: " + name << endl;
+		}
+		else
+		{
+			cout << "You've been here before." << existing->DisplayLocationInfo();
+		}
 	}
 	else
 	{
